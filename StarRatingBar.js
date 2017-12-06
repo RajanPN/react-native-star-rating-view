@@ -87,10 +87,7 @@ const defaultProps = {
     spacing: 10,
     allowsHalfStars: false,
     accurateHalfStars: false,
-    scoreTextStyle: {
-        marginLeft: 10,
-        color: '#ffb819'
-    },
+    scoreTextStyle: {marginLeft: 10, color: '#ffb819'},
     scoreText: '分',
 };
 
@@ -108,21 +105,12 @@ export default class StarRatingBar extends Component {
     componentWillReceiveProps(nextProps) {
         let value = nextProps.score || nextProps.value;
         if (value !== this.state.value) {
-            this.setState({
-                value
-            });
+            this.setState({value});
         }
     }
 
     render() {
-        const {
-            starStyle,
-            spacing,
-            maximumValue,
-            scoreTextStyle,
-            scoreText,
-            dontShowScore
-        } = this.props;
+        const {starStyle, spacing, maximumValue, scoreTextStyle, scoreText, dontShowScore} = this.props;
         let starWidth = 20;
         if (starStyle && starStyle.width) {
             starWidth = starStyle.width;
