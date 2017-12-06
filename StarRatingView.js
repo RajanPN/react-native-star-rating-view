@@ -30,7 +30,11 @@
 
 'use strict';
 
-import React, { PropTypes, Component } from "react";
+import React, {
+    Component
+} from "react";
+import PropTypes from 'prop-types';
+
 import {
     View,
     StyleSheet,
@@ -48,25 +52,25 @@ export default class StarRatingView extends Component {
     static propTypes = {
         style: View.propTypes.style,
         starStyle: View.propTypes.style, // 自定义星星样式
-        readOnly: React.PropTypes.bool, // 是否只读
-        continuous: React.PropTypes.bool, // 是否允许滑动打分
-        maximumValue: React.PropTypes.number.isRequired, // 最大值
-        minimumValue: React.PropTypes.number.isRequired, // 最小值
-        value: React.PropTypes.number.isRequired, // 具体数值
-        valueToFix: React.PropTypes.number, // 保留几位小数
-        spacing: React.PropTypes.number.isRequired, // 分数
-        allowsHalfStars: React.PropTypes.bool, // 是否允许半颗星
-        accurateHalfStars: React.PropTypes.bool, // 是否允许精确值
+        readOnly: PropTypes.bool, // 是否只读
+        continuous: PropTypes.bool, // 是否允许滑动打分
+        maximumValue: PropTypes.number.isRequired, // 最大值
+        minimumValue: PropTypes.number.isRequired, // 最小值
+        value: PropTypes.number.isRequired, // 具体数值
+        valueToFix: PropTypes.number, // 保留几位小数
+        spacing: PropTypes.number.isRequired, // 分数
+        allowsHalfStars: PropTypes.bool, // 是否允许半颗星
+        accurateHalfStars: PropTypes.bool, // 是否允许精确值
         /* todo: 绘制星星图片
-         starBorderColor: React.PropTypes.string, // 星星边线颜色
-         starBorderWidth: React.PropTypes.number, // 星星边线宽度
+         starBorderColor: PropTypes.string, // 星星边线颜色
+         starBorderWidth: PropTypes.number, // 星星边线宽度
          */
-        emptyStarColor: React.PropTypes.string, // 空星填充色
-        tintColor: React.PropTypes.string, // 着色(填充色)
-        emptyStarImage: React.PropTypes.element, // 空星图片
-        halfStarImage: React.PropTypes.element, // 半星图片
-        filledStarImage: React.PropTypes.element, // 实星图片
-        onStarValueChanged: React.PropTypes.func, // 数值改变时的回调函数
+        emptyStarColor: PropTypes.string, // 空星填充色
+        tintColor: PropTypes.string, // 着色(填充色)
+        emptyStarImage: PropTypes.element, // 空星图片
+        halfStarImage: PropTypes.element, // 半星图片
+        filledStarImage: PropTypes.element, // 实星图片
+        onStarValueChanged: PropTypes.func, // 数值改变时的回调函数
     };
 
     static defaultProps = {
@@ -151,65 +155,65 @@ export default class StarRatingView extends Component {
         });
     }
 
-    _handleOnStartShouldSetPanResponderCapture = (e: Object, gestureState: Object)=> {
+    _handleOnStartShouldSetPanResponderCapture = (e: Object, gestureState: Object) => {
         // OnStartShouldSetPanResponderCapture
         console.log('_handleOnStartShouldSetPanResponderCapture');
         // return this.props.readOnly;
         return false;
     }
-    _handleOnMoveShouldSetPanResponderCapture = (e: Object, gestureState: Object)=> {
-        // OnMoveShouldSetPanResponderCapture
-        console.log('_handleOnMoveShouldSetPanResponderCapture');
-        // if (!this.props.readOnly && this.props.continuous) return true;
-        return false;
-    }
-    // 用户开始触摸屏幕的时候，是否愿意成为响应者；
-    _handleOnStartShouldSetPanResponder = (e: Object, gestureState: Object)=> {
-        // Should we become active when the user presses down on the circle?
-        console.log('_handleOnStartShouldSetPanResponder');
-        return !this.props.readOnly;
-    }
-    // 在每一个触摸点开始移动的时候，再询问一次是否响应触摸交互；
-    _handleOnMoveShouldSetPanResponder = (e: Object, gestureState: Object)=> {
-        // Should we become active when the user moves a touch over the circle?
-        console.log('_handleOnMoveShouldSetPanResponder');
-        if (!this.props.readOnly && this.props.continuous) return true;
-        return false;
-    }
-    // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
+    _handleOnMoveShouldSetPanResponderCapture = (e: Object, gestureState: Object) => {
+            // OnMoveShouldSetPanResponderCapture
+            console.log('_handleOnMoveShouldSetPanResponderCapture');
+            // if (!this.props.readOnly && this.props.continuous) return true;
+            return false;
+        }
+        // 用户开始触摸屏幕的时候，是否愿意成为响应者；
+    _handleOnStartShouldSetPanResponder = (e: Object, gestureState: Object) => {
+            // Should we become active when the user presses down on the circle?
+            console.log('_handleOnStartShouldSetPanResponder');
+            return !this.props.readOnly;
+        }
+        // 在每一个触摸点开始移动的时候，再询问一次是否响应触摸交互；
+    _handleOnMoveShouldSetPanResponder = (e: Object, gestureState: Object) => {
+            // Should we become active when the user moves a touch over the circle?
+            console.log('_handleOnMoveShouldSetPanResponder');
+            if (!this.props.readOnly && this.props.continuous) return true;
+            return false;
+        }
+        // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
     _handlePanResponderGrant = (e: Object, gestureState: Object) => {
-        console.log("_handlePanResponderGrant");
-        // this.locationX = e.nativeEvent.locationX;
-        // this.locationY = e.nativeEvent.locationY;
-        this.startLocationX = e.nativeEvent.pageX;
-        this.startLocationY = e.nativeEvent.pageY;
-        this.locationX = this.startLocationX;
-        this.locationY = this.startLocationY;
-        console.log('start location x: ' + this.startLocationX);
-        // this.setState({
-        //     containerStyle: {
-        //         opacity: 0.8, // 透明度改为 0.8
-        //     },
-        // })
-    }
-    // 最近一次的移动距离为gestureState.move{X,Y}
+            console.log("_handlePanResponderGrant");
+            // this.locationX = e.nativeEvent.locationX;
+            // this.locationY = e.nativeEvent.locationY;
+            this.startLocationX = e.nativeEvent.pageX;
+            this.startLocationY = e.nativeEvent.pageY;
+            this.locationX = this.startLocationX;
+            this.locationY = this.startLocationY;
+            console.log('start location x: ' + this.startLocationX);
+            // this.setState({
+            //     containerStyle: {
+            //         opacity: 0.8, // 透明度改为 0.8
+            //     },
+            // })
+        }
+        // 最近一次的移动距离为gestureState.move{X,Y}
     _handlePanResponderMove = (e: Object, gestureState: Object) => {
-        console.log("_handlePanResponderMove");
-        // this.locationX += gestureState.dx;
-        // this.locationY += gestureState.dy;
-        this.locationX = this.startLocationX + gestureState.dx;
-        this.locationY = this.startLocationY + gestureState.dy;
-        let value = this._transFormStarValueByLocationX(this.locationX);
-        if (this.props.continuous) {
-            this._setValue(value);
-            // fix value
-            let valueFixed = this._getFixedValue(value);
-            this.props.onStarValueChanged && this.props.onStarValueChanged(valueFixed);
-        };
+            console.log("_handlePanResponderMove");
+            // this.locationX += gestureState.dx;
+            // this.locationY += gestureState.dy;
+            this.locationX = this.startLocationX + gestureState.dx;
+            this.locationY = this.startLocationY + gestureState.dy;
+            let value = this._transFormStarValueByLocationX(this.locationX);
+            if (this.props.continuous) {
+                this._setValue(value);
+                // fix value
+                let valueFixed = this._getFixedValue(value);
+                this.props.onStarValueChanged && this.props.onStarValueChanged(valueFixed);
+            };
 
-    }
-    // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
-    // 一般来说这意味着一个手势操作已经成功完成。
+        }
+        // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
+        // 一般来说这意味着一个手势操作已经成功完成。
     _handlePanResponderEnd = (e: Object, gestureState: Object) => {
         console.log("_handlePanResponderEnd");
         if (!this.props.readOnly) {
@@ -234,7 +238,7 @@ export default class StarRatingView extends Component {
     componentWillMount() {
         this._createPanResponder();
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this.timer)
     }
 
@@ -244,28 +248,42 @@ export default class StarRatingView extends Component {
 
     /* 渲染组件 */
     render() {
-        return <View
-            {...this._panResponder.panHandlers}
-            style={[styles.container, styles.starContainer, this.props.style]}
-            ref='starRatingView'
-            onLayout={(e: LayoutEvent) => {
+        return <View {...this._panResponder.panHandlers
+        }
+        style = {
+            [styles.container, styles.starContainer, this.props.style]
+        }
+        ref = 'starRatingView'
+        onLayout = {
+            (e: LayoutEvent) => {
                 this.setState({
                     viewLayout: e.nativeEvent.layout
                 }, this._handleLayout(e));
-            }}
-        >
-            {this._renderStarsView()}
-        </View>;
+            }
+        } > {
+            this._renderStarsView()
+        } < /View>;
     }
 
     _renderStarsView = () => {
-        const {value} = this.state;
-        const {allowsHalfStars, accurateHalfStars, spacing, starStyle, emptyStarColor, tintColor, emptyStarImage, filledStarImage} = this.props;
+        const {
+            value
+        } = this.state;
+        const {
+            allowsHalfStars,
+            accurateHalfStars,
+            spacing,
+            starStyle,
+            emptyStarColor,
+            tintColor,
+            emptyStarImage,
+            filledStarImage
+        } = this.props;
         let stars = [];
         for (let idx = 0; idx < this._validMaximumValue(); idx++) {
-            let highlighted = (idx+1 <= Math.ceil(value));
+            let highlighted = (idx + 1 <= Math.ceil(value));
             let star = null;
-            if (allowsHalfStars && highlighted && (idx+1 > value)) {
+            if (allowsHalfStars && highlighted && (idx + 1 > value)) {
                 let progress = value - idx;
                 if (accurateHalfStars) {
                     star = <StarView
@@ -278,8 +296,7 @@ export default class StarRatingView extends Component {
                         progress={progress}
                     >
                     </StarView>;
-                }
-                else {
+                } else {
                     star = <StarView
                         key={`StarView_id_${idx}`}
                         style={[starStyle, {marginRight: spacing}]}
@@ -315,7 +332,11 @@ export default class StarRatingView extends Component {
     }
 
     _handleNextProps = (nextProps) => {
-        let {maximumValue, minimumValue, value} = this.props;
+        let {
+            maximumValue,
+            minimumValue,
+            value
+        } = this.props;
         let changed = false;
         if (nextProps.maximumValue !== maximumValue) {
             maximumValue = nextProps.maximumValue;
@@ -354,47 +375,46 @@ export default class StarRatingView extends Component {
 
     // 获取星星尺寸大小
     _getStarSize = () => {
-        if (!this.props.starStyle) {
+            if (!this.props.starStyle) {
+                return {
+                    width: 16,
+                    height: 16,
+                }
+            }
             return {
-                width: 16,
-                height: 16,
+                width: this.props.starStyle.width || 16,
+                height: this.props.starStyle.height || 16,
             }
         }
-        return {
-            width: this.props.starStyle.width || 16,
-            height: this.props.starStyle.height || 16,
-        }
-    }
-    // 通过 LocationX 算出 star value
+        // 通过 LocationX 算出 star value
     _transFormStarValueByLocationX = (locationX) => {
-        console.log('_transFormStarValueByLocationX: ' + locationX);
-        let actualLocationX = locationX - this.locationDiffX;
-        let count = this.state.maximumValue;
-        let containerWidth = count * this._getStarSize().width + this.props.spacing * (count - 1);
-        let cellWidth = containerWidth / count;
+            console.log('_transFormStarValueByLocationX: ' + locationX);
+            let actualLocationX = locationX - this.locationDiffX;
+            let count = this.state.maximumValue;
+            let containerWidth = count * this._getStarSize().width + this.props.spacing * (count - 1);
+            let cellWidth = containerWidth / count;
 
-        if (actualLocationX >= containerWidth) {
-            return this.state.maximumValue;
-        } else {
-            let value = actualLocationX / cellWidth;
-            if (this.props.allowsHalfStars) {
-                if (this.props.accurateHalfStars) {
-                    value = value;
-                }
-                else {
-                    if (value+.5 < Math.ceil(value)) {
-                        value = Math.floor(value)+.5;
-                    } else {
-                        value = Math.ceil(value);
-                    }
-                }
+            if (actualLocationX >= containerWidth) {
+                return this.state.maximumValue;
             } else {
-                value = Math.ceil(value);
+                let value = actualLocationX / cellWidth;
+                if (this.props.allowsHalfStars) {
+                    if (this.props.accurateHalfStars) {
+                        value = value;
+                    } else {
+                        if (value + .5 < Math.ceil(value)) {
+                            value = Math.floor(value) + .5;
+                        } else {
+                            value = Math.ceil(value);
+                        }
+                    }
+                } else {
+                    value = Math.ceil(value);
+                }
+                return value;
             }
-            return value;
         }
-    }
-    // 保留几位小数
+        // 保留几位小数
     _getFixedValue = (value: 0) => {
         // fix value
         value = Math.max(0, value);
@@ -402,10 +422,9 @@ export default class StarRatingView extends Component {
         if (this.props.allowsHalfStars) {
             if (this.props.accurateHalfStars) {
                 valueFixed = Number(value.toFixed(this.props.valueToFix)); // toFixed 转成字符串了。。
-            }
-            else {
-                if (value+.5 < Math.ceil(value)) {
-                    valueFixed = Math.floor(value)+.5;
+            } else {
+                if (value + .5 < Math.ceil(value)) {
+                    valueFixed = Math.floor(value) + .5;
                 } else {
                     valueFixed = Math.ceil(value);
                 }
@@ -419,23 +438,23 @@ export default class StarRatingView extends Component {
 
     // 有效最小值
     _validMinimumValue = (minimumValue) => {
-        if (!minimumValue) {
-            minimumValue = this.props.minimumValue;
+            if (!minimumValue) {
+                minimumValue = this.props.minimumValue;
+            }
+            return Math.floor(Math.max(0, minimumValue));
         }
-        return Math.floor(Math.max(0, minimumValue));
-    }
-    // 有效最大值
+        // 有效最大值
     _validMaximumValue = (maximumValue) => {
-        if (!maximumValue) {
-            maximumValue = this.props.maximumValue;
+            if (!maximumValue) {
+                maximumValue = this.props.maximumValue;
+            }
+            return Math.ceil(Math.max(this._validMinimumValue(), maximumValue));
         }
-        return Math.ceil(Math.max(this._validMinimumValue(), maximumValue));
-    }
-    // 有效值
+        // 有效值
     _validValue = (value) => {
-        return Math.min(Math.max(value, this._validMinimumValue()), this._validMaximumValue());
-    }
-    // 设置 value
+            return Math.min(Math.max(value, this._validMinimumValue()), this._validMaximumValue());
+        }
+        // 设置 value
     _setValue = (value) => {
         console.log('_setValue: ' + value);
         if (value !== this.state.value && value <= this._validMaximumValue() && value >= this._validMinimumValue()) {
@@ -448,16 +467,16 @@ export default class StarRatingView extends Component {
 
 class StarView extends Component {
     static propTypes = {
-        progress: React.PropTypes.number.isRequired, // 占比
+        progress: PropTypes.number.isRequired, // 占比
         /* todo: 绘制星星图片
-         starBorderColor: React.PropTypes.string, // 星星边线颜色
-         starBorderWidth: React.PropTypes.number, // 星星边线宽度
+         starBorderColor: PropTypes.string, // 星星边线颜色
+         starBorderWidth: PropTypes.number, // 星星边线宽度
          */
-        emptyStarColor: React.PropTypes.string, // 空星填充色
-        tintColor: React.PropTypes.string, // 着色(填充色)
-        emptyStarImage: React.PropTypes.element, // 空星图片
-        halfStarImage: React.PropTypes.element, // 半星图片
-        filledStarImage: React.PropTypes.element, // 实星图片
+        emptyStarColor: PropTypes.string, // 空星填充色
+        tintColor: PropTypes.string, // 着色(填充色)
+        emptyStarImage: PropTypes.element, // 空星图片
+        halfStarImage: PropTypes.element, // 半星图片
+        filledStarImage: PropTypes.element, // 实星图片
     };
 
     static defaultProps = {
@@ -485,8 +504,16 @@ class StarView extends Component {
 
     /* 渲染组件 */
     render = () => {
-        let {progress} = this.state;
-        let {style, emptyStarImage, filledStarImage, emptyStarColor, tintColor} = this.props;
+        let {
+            progress
+        } = this.state;
+        let {
+            style,
+            emptyStarImage,
+            filledStarImage,
+            emptyStarColor,
+            tintColor
+        } = this.props;
         let defaultStarStyle = {
             width: 16,
             height: 16,
@@ -505,10 +532,10 @@ class StarView extends Component {
             }
         }
         starStyleMerge = {
-            ...defaultStarStyle,
-            ...starStyleMerge,
-        }
-        // 星星宽度
+                ...defaultStarStyle,
+                ...starStyleMerge,
+            }
+            // 星星宽度
         let starWidth = Math.max(0, starStyleMerge.width);
         if (!emptyStarImage) {
             emptyStarImage = <Icon style={{flex: 1, textAlign: 'center'}} name="star-o" size={starWidth} color={emptyStarColor}/>
@@ -532,13 +559,14 @@ class StarView extends Component {
                     style={[styles.absoluteStar, starStyleMerge, {width: starStyleMerge.width * progress}]}
                 >
                     {filledStarImage}
-                </View>
-            </View>
+                </View> < /View>
         );
     }
 
     _handleNextProps = (nextProps) => {
-        let {progress} = this.props;
+        let {
+            progress
+        } = this.props;
         if (nextProps.progress !== progress) {
             progress = nextProps.progress;
             this.setState({
